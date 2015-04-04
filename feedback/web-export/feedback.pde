@@ -48,23 +48,18 @@ void draw()
   if(downDown)
     scale -= 0.01f;
     
-  if(leftDown || rightDown)
-  {
-    if(rightDown)
-      angle = 0.01f;
-    if(leftDown)
-      angle = -0.01f;
-  }
+  if(rightDown)
+    angle = 0.01f;
+  else if(leftDown)
+    angle = -0.01f;
   else
-  {
     angle = 0;
-  }
   
   if(auto)
   {
     angle = 0.01f;
     scale = 0.2 * abs(sin(count)) + 0.84;
-    count += 0.001f;
+    count += 0.03f;
   }
   
   background(0);

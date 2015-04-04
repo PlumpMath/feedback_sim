@@ -13,6 +13,9 @@ boolean drawShape;
 float count;
 boolean auto;
 boolean colorStep;
+int xMouse;
+int yMouse;
+boolean updateMouse;
 
 void setup()
 {
@@ -38,6 +41,8 @@ void setup()
   foregroundImage.endDraw();
   
   background(0);
+
+  updateMouse = true;
 }
 
 void draw()
@@ -48,23 +53,18 @@ void draw()
   if(downDown)
     scale -= 0.01f;
     
-  if(leftDown || rightDown)
-  {
-    if(rightDown)
-      angle = 0.01f;
-    if(leftDown)
-      angle = -0.01f;
-  }
+  if(rightDown)
+    angle = 0.01f;
+  else if(leftDown)
+    angle = -0.01f;
   else
-  {
     angle = 0;
-  }
   
   if(auto)
   {
     angle = 0.01f;
     scale = 0.2 * abs(sin(count)) + 0.84;
-    count += 0.001f;
+    count += 0.03f;
   }
   
   background(0);
@@ -83,18 +83,24 @@ void draw()
   foregroundImage.fill(colorNumber%255, 255, 255);
   if(colorStep)
     colorNumber++;
-  
+
+  if(updateMouse)
+  {
+    xMouse = mouseX;
+    yMouse = mouseY;
+  }
+
   if(drawShape)
   {
     if(square)
     {
       foregroundImage.noStroke();
-      foregroundImage.rect(mouseX-25, mouseY-25, int(foregroundImage.width/10), int(foregroundImage.height/10));
+      foregroundImage.rect(xMouse-25, yMouse-25, int(foregroundImage.width/10), int(foregroundImage.height/10));
     }
     else 
     {
       foregroundImage.noStroke();
-      foregroundImage.ellipse(mouseX, mouseY, int(foregroundImage.width/10), int(foregroundImage.height/10));
+      foregroundImage.ellipse(xMouse, yMouse, int(foregroundImage.width/10), int(foregroundImage.height/10));
     }
   }
   
@@ -166,6 +172,10 @@ void keyReleased()
     
   if(key == 'r')
     resetReleased();
+}
+
+void mouseClicked() {
+  updateMouse = !updateMouse
 }
 
 void drawImageOnImage(PGraphics subject, PGraphics canvas)
@@ -271,4 +281,3 @@ void downReleased()
 {
   downDown = false;
 }
-
