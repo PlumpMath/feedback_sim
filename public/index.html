@@ -73,7 +73,7 @@
 								<span class="glyphicon glyphicon-minus" />
 							</button>
 
-							<a>&nbsp&nbsp</a>
+							&nbsp&nbsp
 
 							<button id="rotateLeftButton" type="button" class="btn btn-success">
 		            			<span class="glyphicon glyphicon-repeat icon-flipped" />
@@ -81,8 +81,47 @@
 							<button id="rotateRightButton" type="button" class="btn btn-danger">
 								<span class="glyphicon glyphicon-repeat" />
 							</button>
+
+							&nbsp&nbsp
+
+							<button id="resetScaleButton" type="button" class="btn btn-warning">Reset Scale</button>
 		            	</div>
 		          	</div>
+
+		          	<div class="panel panel-default">
+		            	<div class="panel-heading">
+		              		<h3 class="panel-title">Display Options</h3>
+		            	</div>
+		            	<div class="panel-body">
+
+		            		<div class="row">
+		            			<div class="col-md-2">
+									<button id="invertButton" type="button" style="margin-top: 12px;" class="btn btn-info">Invert</button>
+								</div>
+								<div class="radio col-md-3" style="margin-left:10px;">
+									<label style="color:black;"><input id="circleRadioButton" type="radio" name="shape" checked></input>Circle</label>
+									<br/>
+									<label style="color:black;"><input id="squareRadioButton" type="radio" name="shape"></input>Square</label>
+								</div>
+							</div>
+
+							<br/>
+
+		            		<form class="form-inline">
+							    <div class="checkbox">
+							        <label style="color:black;"><input id="colorCheckbox" type="checkbox" checked/> Advance Color </label>
+							        &nbsp
+							        <label style="color:black;"><input id="autoCheckbox" type="checkbox"/> Auto Mode </label>
+							        &nbsp
+							        <label style="color:black;"><input id="shapeCheckbox" type="checkbox"/> Draw Shape </label>
+							    </div>
+							</form>
+		            	</div>
+		          	</div>
+
+		          	<button id="saveButton" type="button" class="btn btn-success">Save</button>
+		          	<button id="recordButton" type="button" class="btn btn-danger">Record</button>
+		          	<button id="resetButton" type="button" class="btn btn-warning">Reset</button>
 	    		</div>
     		</div>
 		</div>

@@ -136,23 +136,11 @@ void keyPressed()
     
   if(key == 'i')
     invert();
-    
-  if(key == 'n')
-    toggleDrawShape();
-    
-  if(key == 'a')
-    toggleAuto();
-    
-  if(key == 'c')
-    toggleColorStep();
   
   if(keyCode == LEFT)
     leftPressed();
   if(keyCode == RIGHT)
     rightPressed();
-    
-  if(key == ' ')
-    toggleSquare();
     
   if(key == 'r')
     resetPressed();
@@ -209,7 +197,7 @@ void invert()
 {
   foregroundImage.filter(INVERT);
   copy.filter(INVERT);
-  colorNumber = 255 - colorNumber;
+  //colorNumber = 255 - colorNumber;
 }
 
 void resetPressed()

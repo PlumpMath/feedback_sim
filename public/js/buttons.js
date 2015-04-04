@@ -15,14 +15,34 @@ function getProcessingInstance() {
 		bindButtons();
 };
 
-function bindButtons() {
-	$("#rotateLeftButton").mousedown(processingInstance.leftPressed);
-	$("#rotateLeftButton").mouseup(processingInstance.leftReleased);
-	$("#rotateRightButton").mousedown(processingInstance.rightPressed);
-	$("#rotateRightButton").mouseup(processingInstance.rightReleased);
+function focusCanvas() {
+	$("#feedback").attr("tabindex", 0);
+	$("#feedback").focus();
+};
 
-	$("#scaleUpButton").mousedown(processingInstance.upPressed);
-	$("#scaleUpButton").mouseup(processingInstance.upReleased);
-	$("#scaleDownButton").mousedown(processingInstance.downPressed);
-	$("#scaleDownButton").mouseup(processingInstance.downReleased);
+function bindButtons() {
+	$("#rotateLeftButton").mousedown(function() { 
+		processingInstance.leftPressed();
+		focusCanvas();
+	});
+	$("#rotateLeftButton").mouseup(function() { processingInstance.leftReleased(); });
+	$("#rotateRightButton").mousedown(function() { processingInstance.rightPressed(); });
+	$("#rotateRightButton").mouseup(function() { processingInstance.rightReleased(); });
+
+	$("#scaleUpButton").mousedown(function() { processingInstance.upPressed(); });
+	$("#scaleUpButton").mouseup(function() { processingInstance.upReleased(); });
+	$("#scaleDownButton").mousedown(function() { processingInstance.downPressed(); });
+	$("#scaleDownButton").mouseup(function() { processingInstance.downReleased(); });
+
+	$("#resetScaleButton").click(function() { processingInstance.resetScale(); });
+
+	$("#colorCheckbox").change(function() { processingInstance.toggleColorStep(); });
+	$("#autoCheckbox").change(function() { processingInstance.toggleAuto(); });
+	$("#shapeCheckbox").change(function() { processingInstance.toggleDrawShape(); });
+	$("#circleRadioButton").change(function() { processingInstance.toggleSquare(); });
+	$("#squareRadioButton").change(function() { processingInstance.toggleSquare(); });
+
+	$("#invertButton").click(function() { processingInstance.invert(); });
+	$("#resetButton").mousedown(function() { processingInstance.resetPressed(); });
+	$("#resetButton").mouseup(function() { processingInstance.resetReleased(); });
 };
