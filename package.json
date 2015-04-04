@@ -12,7 +12,8 @@
     "bootstrap": "^3.3.4",
     "express": "~4.9.x",
     "ffmpeg": "0.0.4",
-    "fluent-ffmpeg": "^2.0.0-rc3"
+    "fluent-ffmpeg": "^2.0.0-rc3",
+    "ws": "0.4.x"
   },
   "engines": {
     "node": "0.10.x"

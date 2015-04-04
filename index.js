@@ -6,12 +6,12 @@ var bodyParser = require('body-parser');
 var BinaryServer = require('binaryjs').BinaryServer;
 var http = require('http');
 var app = express();
+var port = process.env.PORT || 5000
 
-var server = http.createServer(app).listen(9000);
+var server = http.createServer(app).listen(port);
 
 var binaryserver = new BinaryServer({ server: server});
 
-app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 

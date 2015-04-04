@@ -34,8 +34,8 @@ $( document ).ready(function() {
       recorder.stop();
       recordButton.text("Processing...");
       var jsonData = JSON.stringify({ sequence: recorder.sequence })
-      var hostname = window.location.hostname;
-      var client = new BinaryClient('ws://' + hostname + ':9000/');
+      var host = location.origin.replace(/^http/, 'ws')
+      var client = new BinaryClient(host);
       client.on('open', function(stream) {
         var stream = client.createStream({ session_id: fingerprint });
 
