@@ -7,8 +7,12 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "binaryjs": "^0.2.1",
+    "body-parser": "^1.12.2",
     "bootstrap": "^3.3.4",
-    "express": "~4.9.x"
+    "express": "~4.9.x",
+    "ffmpeg": "0.0.4",
+    "fluent-ffmpeg": "^2.0.0-rc3"
   },
   "engines": {
     "node": "0.10.x"

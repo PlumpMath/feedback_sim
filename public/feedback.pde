@@ -269,3 +269,8 @@ void downReleased()
 {
   downDown = false;
 }
+
+void saveImage()
+{
+  saveFrame();
+}

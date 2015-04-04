@@ -45,4 +45,6 @@ function bindButtons() {
 	$("#invertButton").click(function() { processingInstance.invert(); });
 	$("#resetButton").mousedown(function() { processingInstance.resetPressed(); });
 	$("#resetButton").mouseup(function() { processingInstance.resetReleased(); });
+
+	$("#saveButton").click(function() { processingInstance.saveImage(); });
 };
