@@ -67,8 +67,21 @@ app.get('/get-video/:session_id/', function(request, response) {
 
     var fileStream = fs.createReadStream('video-' + session_id + '.avi');
     fileStream.pipe(response);
-})
+});
+
+setInterval(function() {
+	console.log("start");
+	fs.readdir(".", function(error, list) {
+		list.forEach(function(file) {
+			var extension = file.split('.')[1];
+			if(extension == "avi" || extension == "png")
+			{
+				fs.unlinkSync(file);
+			}
+		});
+	});
+}, 3600000);
 
 app.listen(app.get('port'), function() {
-  console.log("Feedback Simulator is running at localhost:" + app.get('port'));
+  console.log("Feedback Simulator is running at localhost:" + port);
 });
