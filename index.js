@@ -10,7 +10,7 @@ var port = process.env.PORT || 5000
 
 var server = http.createServer(app).listen(port);
 
-var binaryserver = new BinaryServer({ server: server});
+// var binaryserver = new BinaryServer({ server: server});
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
