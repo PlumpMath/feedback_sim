@@ -10,10 +10,14 @@
 		<script src="js/processing.js" type="text/javascript"></script>
 		<script src="js/jquery.js"></script>
 		<script src="js/buttons.js"></script>
-		<script src="js/fingerprint.js"></script>
-		<script src="js/binary.js"></script>
+		<!-- <script src="js/fingerprint.js"></script> -->
+		<!-- <script src="js/binary.js"></script> -->
 		<script src="js/record.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/LZWEncoder.js"></script>
+		<script src="js/NeuQuant.js"></script>
+		<script src="js/GIFEncoder.js"></script>
+		<scriptsrc="js/b64.js"></script>
 
 		<script type="text/javascript">
 			// convenience function to get the id attribute of generated sketch html element
@@ -23,20 +27,20 @@
 
 		<style type="text/css">
 			body {
-				background-color: #333; color: #bbb; 
+				background-color: #333; color: #bbb;
 				line-height: normal;
 			}
-			canvas { 
-				display: block; 
-				outline: 0px; 
-				margin-bottom: 1.5em; 
+			canvas {
+				display: block;
+				outline: 0px;
+				margin-bottom: 1.5em;
 			}
 			.container {
-				margin: 50px auto 0px auto; 
+				margin: 50px auto 0px auto;
 				padding: 25px 25px 10px 25px;
 				overflow: auto;
-				border-left: 1px solid #444; 
-				border-top: 1px solid #444; 
+				border-left: 1px solid #444;
+				border-top: 1px solid #444;
 				border-right: 1px solid #333;
 				border-bottom: 1px solid #333;
 				background-color: #3d3d3d;
@@ -54,7 +58,7 @@
 		<div class="container" role="main">
 			<div class="row">
 				<div class="col-md-7">
-					<canvas id="feedback" data-processing-sources="feedback.pde" 
+					<canvas id="feedback" data-processing-sources="feedback.pde"
 							width="600" height="600">
 						<p>Your browser does not support the canvas tag.</p>
 						<!-- Note: you can put any alternative content here. -->
@@ -62,72 +66,71 @@
 					<noscript>
 						<p>JavaScript is required to view the contents of this page.</p>
 					</noscript>
-		    	</div>
-		    	<div class="col-md-5">
-		    		<div class="panel panel-default">
-		            	<div class="panel-heading">
-		              		<h3 class="panel-title">Scale and Rotation</h3>
-		            	</div>
-		            	<div class="panel-body">
-		            		<button id="scaleUpButton" type="button" class="btn btn-success">
-		            			<span class="glyphicon glyphicon-plus" />
-							</button>
-							<button id="scaleDownButton" type="button" class="btn btn-danger">
-								<span class="glyphicon glyphicon-minus" />
-							</button>
+		    </div>
+		    <div class="col-md-5">
+	    		<div class="panel panel-default">
+	          <div class="panel-heading">
+	            		<h3 class="panel-title">Scale and Rotation</h3>
+	          	</div>
+	          	<div class="panel-body">
+	          		<button id="scaleUpButton" type="button" class="btn btn-success">
+	          			<span class="glyphicon glyphicon-plus" />
+								</button>
+								<button id="scaleDownButton" type="button" class="btn btn-danger">
+									<span class="glyphicon glyphicon-minus" />
+								</button>
 
-							&nbsp&nbsp
+								&nbsp&nbsp
 
-							<button id="rotateLeftButton" type="button" class="btn btn-success">
-		            			<span class="glyphicon glyphicon-repeat icon-flipped" />
-							</button>
-							<button id="rotateRightButton" type="button" class="btn btn-danger">
-								<span class="glyphicon glyphicon-repeat" />
-							</button>
+								<button id="rotateLeftButton" type="button" class="btn btn-success">
+			            			<span class="glyphicon glyphicon-repeat icon-flipped" />
+								</button>
+								<button id="rotateRightButton" type="button" class="btn btn-danger">
+									<span class="glyphicon glyphicon-repeat" />
+								</button>
 
-							&nbsp&nbsp
+								&nbsp&nbsp
 
-							<button id="resetScaleButton" type="button" class="btn btn-warning">Reset Scale</button>
-		            	</div>
-		          	</div>
+								<button id="resetScaleButton" type="button" class="btn btn-warning">Reset Scale</button>
+	            </div>
+	          </div>
 
-		          	<div class="panel panel-default">
-		            	<div class="panel-heading">
-		              		<h3 class="panel-title">Display Options</h3>
-		            	</div>
-		            	<div class="panel-body">
-
-		            		<div class="row">
-		            			<div class="col-md-2">
-									<button id="invertButton" type="button" style="margin-top: 12px;" class="btn btn-info">Invert</button>
+	          <div class="panel panel-default">
+            	<div class="panel-heading">
+              		<h3 class="panel-title">Display Options</h3>
+            	</div>
+            	<div class="panel-body">
+	          		<div class="row">
+	          			<div class="col-md-2">
+										<button id="invertButton" type="button" style="margin-top: 12px;" class="btn btn-info">Invert</button>
+									</div>
+									<div class="radio col-md-3" style="margin-left:10px;">
+										<label style="color:black;"><input id="circleRadioButton" type="radio" name="shape" checked></input>Circle</label>
+										<br/>
+										<label style="color:black;"><input id="squareRadioButton" type="radio" name="shape"></input>Square</label>
+									</div>
 								</div>
-								<div class="radio col-md-3" style="margin-left:10px;">
-									<label style="color:black;"><input id="circleRadioButton" type="radio" name="shape" checked></input>Circle</label>
-									<br/>
-									<label style="color:black;"><input id="squareRadioButton" type="radio" name="shape"></input>Square</label>
-								</div>
-							</div>
 
-							<br/>
+								<br/>
 
-		            		<form class="form-inline">
-							    <div class="checkbox">
-							        <label style="color:black;"><input id="colorCheckbox" type="checkbox" checked/> Advance Color </label>
-							        &nbsp
-							        <label style="color:black;"><input id="autoCheckbox" type="checkbox"/> Auto Mode </label>
-							        &nbsp
-							        <label style="color:black;"><input id="shapeCheckbox" type="checkbox" checked/> Draw Shape </label>
-							    </div>
-							</form>
-		            	</div>
-		          	</div>
+			          <form class="form-inline">
+								    <div class="checkbox">
+								        <label style="color:black;"><input id="colorCheckbox" type="checkbox" checked/> Advance Color </label>
+								        &nbsp
+								        <label style="color:black;"><input id="autoCheckbox" type="checkbox"/> Auto Mode </label>
+								        &nbsp
+								        <label style="color:black;"><input id="shapeCheckbox" type="checkbox" checked/> Draw Shape </label>
+								    </div>
+								</form>
+	            </div>
+	          </div>
 
-		          	<button id="saveButton" type="button" class="btn btn-success">Save</button>
-		          	<button id="recordButton" type="button" class="btn btn-danger">Record</button>
-		          	<button id="resetButton" type="button" class="btn btn-warning">Reset</button>
-		          	<iframe id='download-iframe' style='display:none;'>
-	    		</div>
+          	<button id="saveButton" type="button" class="btn btn-success">Save</button>
+          	<button id="recordButton" type="button" class="btn btn-danger">Record</button>
+          	<button id="resetButton" type="button" class="btn btn-warning">Reset</button>
+          	<img id='displayGif' />
     		</div>
+    	</div>
 		</div>
 	</body>
 </html>
