@@ -8,7 +8,6 @@ $( document ).ready(function() {
   var frames = [];
 
   var recordButton = $("#recordButton");
-  var displayGif = $('#displayGif');
   var progressbar = $('.progress-bar');
   var progressDiv = $('.progress');
   progressDiv.hide();
@@ -43,7 +42,27 @@ $( document ).ready(function() {
         recording = false;
         progressDiv.fadeOut();
         progressbar.css('width', '0%').attr('aria-valuenow', 0);
-        window.open(URL.createObjectURL(blob));
+        // var urlCreator = window.URL || window.webkitURL;
+        // var imageUrl = urlCreator.createObjectURL(blob);
+        // image.onload = function() {
+        //   urlCreator.revokeObjectURL(imageUrl);
+        // };
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+          var wrapper = $('<a target="_blank">');
+          wrapper.attr('href', reader.result);
+
+          var displayImg = $('<img class="img-thumbnail">');
+          displayImg.css('max-width', '100%');
+          displayImg.css('max-height', '100%');
+          displayImg.css('margin', '10px 00px 10px 00px');
+          displayImg.attr('src', reader.result);
+
+          displayImg.appendTo(wrapper);
+          $('<br>').appendTo(wrapper);
+          wrapper.appendTo('#imageDiv');
+        };
       });
       gif.render();
     }
