@@ -1,7 +1,7 @@
 $( document ).ready(function() {
   var canvas = $('#feedback')[0];
   var context = canvas.getContext('2d');
-  var frameDelay = 1000/30
+  var frameDelay = 1000/30;
 
   var recording = false;
   var timer = null;
@@ -25,7 +25,8 @@ $( document ).ready(function() {
       recordButton.text("Stop");
       timer = setInterval(function() {
         gif.addFrame(context, {
-          delay: frameDelay
+          delay: frameDelay,
+          copy: true
         });
       }, frameDelay);
     } else {
