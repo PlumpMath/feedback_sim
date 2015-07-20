@@ -43,10 +43,27 @@ $( document ).ready(function() {
         progressbar.css('width', '0%').attr('aria-valuenow', 0);
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(blob);
-        var link = $('<a target="_blank">');
-        link.attr('href', imageUrl);
-        link.html('Image');
-        link.appendTo('#imageLinkDiv');
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+          var displayImg = $('<img class="img-thumbnail">');
+          displayImg.css('max-width', '100%');
+          displayImg.css('max-height', '100%');
+          displayImg.css('margin', '10px 00px 10px 00px');
+          displayImg.attr('src', reader.result);
+
+          var link = $('<a target="_blank">');
+          link.attr('href', imageUrl);
+          displayImg.appendTo(link);
+
+          var imageLinkDiv = $('#imageLinkDiv');
+          if (!$.trim(imageLinkDiv.html()).length) {
+            var h3 = $('<h3>');
+            h3.html('Recordings');
+            h3.appendTo('#imageLinkDiv');
+          }
+          link.appendTo('#imageLinkDiv');
+        };
       });
       gif.render();
     }
