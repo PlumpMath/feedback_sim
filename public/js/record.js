@@ -15,10 +15,10 @@ $( document ).ready(function() {
   recordButton.click(function() {
     if(!recording) {
       gif = new GIF({
-        quality: 35,
+        quality: 45,
         workers: 4,
-        width: canvas.width,
-        height: canvas.height,
+        width: canvas.width/2,
+        height: canvas.height/2,
         workerScript: 'js/gif.worker.js'
       });
       recording = true;
