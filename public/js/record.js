@@ -17,15 +17,14 @@ $( document ).ready(function() {
       gif = new GIF({
         quality: 45,
         workers: 4,
-        width: canvas.width/2,
-        height: canvas.height/2,
+        width: canvas.width,
+        height: canvas.height,
         workerScript: 'js/gif.worker.js'
       });
       recording = true;
       recordButton.text("Stop");
       timer = setInterval(function() {
         gif.addFrame(context, {
-          copy: true,
           delay: frameDelay
         });
       }, frameDelay);
@@ -42,27 +41,12 @@ $( document ).ready(function() {
         recording = false;
         progressDiv.fadeOut();
         progressbar.css('width', '0%').attr('aria-valuenow', 0);
-        // var urlCreator = window.URL || window.webkitURL;
-        // var imageUrl = urlCreator.createObjectURL(blob);
-        // image.onload = function() {
-        //   urlCreator.revokeObjectURL(imageUrl);
-        // };
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function() {
-          var wrapper = $('<a target="_blank">');
-          wrapper.attr('href', reader.result);
-
-          var displayImg = $('<img class="img-thumbnail">');
-          displayImg.css('max-width', '100%');
-          displayImg.css('max-height', '100%');
-          displayImg.css('margin', '10px 00px 10px 00px');
-          displayImg.attr('src', reader.result);
-
-          displayImg.appendTo(wrapper);
-          $('<br>').appendTo(wrapper);
-          wrapper.appendTo('#imageDiv');
-        };
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var link = $('<a target="_blank">');
+        link.attr('href', imageUrl);
+        link.html('Image');
+        link.appendTo('#imageLinkDiv');
       });
       gif.render();
     }
