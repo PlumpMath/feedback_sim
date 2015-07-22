@@ -1,3 +1,7 @@
 language: node_js
 node_js:
   - "0.12.5"
+deploy:
+    provider: heroku
+    api_key: b5d36aa1-974d-4175-aa3e-a16f121d6939
+    app: feedback-sim
