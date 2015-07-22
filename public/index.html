@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Feedback Simulator</title>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Feedback Simulator</title>
 
-		<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
 		<!--[if lt IE 9]>
-			<script type="text/javascript">alert("Your browser does not support the canvas tag.");</script>
+		<script type="text/javascript">alert("Your browser does not support the canvas tag.");</script>
 		<![endif]-->
 		<script src="js/processing.js" type="text/javascript"></script>
 		<script src="js/jquery.js"></script>
 		<script src="js/buttons.js"></script>
 		<script src="js/record.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap.js"></script>
 		<script src="js/gif.js"></script>
 
 		<script type="text/javascript">
@@ -51,88 +51,95 @@
 	</head>
 	<body>
 		<div class="container" role="main">
-			<div class="row">
+			<div>
 				<div class="col-md-7">
 					<canvas id="feedback" data-processing-sources="feedback.pde"
-							width="600" height="600">
-						<p>Your browser does not support the canvas tag.</p>
-						<!-- Note: you can put any alternative content here. -->
-					</canvas>
-					<noscript>
-						<p>JavaScript is required to view the contents of this page.</p>
-					</noscript>
-		    </div>
-		    <div class="col-md-5">
-	    		<div class="panel panel-default">
-	          <div class="panel-heading">
-	            		<h3 class="panel-title">Scale and Rotation</h3>
-	          	</div>
-	          	<div class="panel-body">
-	          		<button id="scaleUpButton" type="button" class="btn btn-success">
-	          			<span class="glyphicon glyphicon-plus" />
-								</button>
-								<button id="scaleDownButton" type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-minus" />
-								</button>
+					width="600" height="600">
+					<p>Your browser does not support the canvas tag.</p>
+					<!-- Note: you can put any alternative content here. -->
+				</canvas>
+				<noscript>
+					<p>JavaScript is required to view the contents of this page.</p>
+				</noscript>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Scale and Rotation</h3>
+						</div>
+						<div class="panel-body">
+							<button id="scaleUpButton" type="button" class="btn btn-success">
+								<span class="glyphicon glyphicon-plus" />
+							</button>
+							<button id="scaleDownButton" type="button" class="btn btn-danger">
+								<span class="glyphicon glyphicon-minus" />
+							</button>
 
-								&nbsp&nbsp
+							&nbsp&nbsp
 
-								<button id="rotateLeftButton" type="button" class="btn btn-success">
-			            			<span class="glyphicon glyphicon-repeat icon-flipped" />
-								</button>
-								<button id="rotateRightButton" type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-repeat" />
-								</button>
+							<button id="rotateLeftButton" type="button" class="btn btn-success">
+								<span class="glyphicon glyphicon-repeat icon-flipped" />
+							</button>
+							<button id="rotateRightButton" type="button" class="btn btn-danger">
+								<span class="glyphicon glyphicon-repeat" />
+							</button>
 
-								&nbsp&nbsp
+							&nbsp&nbsp
 
-								<button id="resetScaleButton" type="button" class="btn btn-warning">Reset Scale</button>
-	            </div>
-	          </div>
+							<button id="resetScaleButton" type="button" class="btn btn-warning">Reset Scale</button>
+						</div>
+					</div>
 
-	          <div class="panel panel-default">
-            	<div class="panel-heading">
-              		<h3 class="panel-title">Display Options</h3>
-            	</div>
-            	<div class="panel-body">
-	          		<div class="row">
-	          			<div class="col-md-2">
-										<button id="invertButton" type="button" style="margin-top: 12px;" class="btn btn-info">Invert</button>
-									</div>
-									<div class="radio col-md-3" style="margin-left:10px;">
-										<label style="color:black;"><input id="circleRadioButton" type="radio" name="shape" checked></input>Circle</label>
-										<br/>
-										<label style="color:black;"><input id="squareRadioButton" type="radio" name="shape"></input>Square</label>
-									</div>
-								</div>
-
-								<br/>
-
-			          <form class="form-inline">
-								    <div class="checkbox">
-								        <label style="color:black;"><input id="colorCheckbox" type="checkbox" checked/> Advance Color </label>
-								        &nbsp
-								        <label style="color:black;"><input id="autoCheckbox" type="checkbox"/> Auto Mode </label>
-								        &nbsp
-								        <label style="color:black;"><input id="shapeCheckbox" type="checkbox" checked/> Draw Shape </label>
-								    </div>
-								</form>
-	            </div>
-	          </div>
-						<div class="progress">
-							<div class="progress-bar progress-bar-success progress-bar-striped active" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Display Options</h3>
+						</div>
+						<div class="panel-body">
+							<div class="col-md-12">
+								<button id="invertButton" type="button" class="btn btn-info col-md-12" data-toggle="button" autocomplete="off">Invert</button>
+							</div>
+							<div class="btn-group col-md-12" data-toggle="buttons">
+								<label class="btn btn-primary active col-md-6">
+									<input id="circleRadioButton" type="radio" name="shape" checked>Circle
+								</label>
+								<label class="btn btn-primary col-md-6">
+									<input id="squareRadioButton" type="radio" name="shape">Square
+								</label>
+							</div>
+							<div class="btn-group col-md-12" data-toggle="buttons">
+								<label class="btn btn-primary active col-md-4">
+									<input id="colorCheckbox" autocomplete="off" type="checkbox" checked>Advance Color
+								</label>
+								<label class="btn btn-primary col-md-4">
+									<input id="autoCheckbox" autocomplete="off" type="checkbox">Auto Mode
+								</label>
+								<label class="btn btn-primary active col-md-4">
+									<input id="shapeCheckbox" autocomplete="off" type="checkbox" checked/>Draw Shape
+								</label>
 							</div>
 						</div>
 
-          	<button id="saveButton" type="button" class="btn btn-success">Save</button>
-          	<button id="recordButton" type="button" class="btn btn-danger">Record</button>
-          	<button id="resetButton" type="button" class="btn btn-warning">Reset</button>
+						<br/>
+					</div>
+				</div>
 
-						<div id="imageLinkDiv">
+				<div class="col-md-5">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success progress-bar-striped active" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 						</div>
+					</div>
 
-    		</div>
-    	</div>
+					<button id="saveButton" type="button" class="btn btn-success">Save</button>
+					<button id="recordButton" type="button" class="btn btn-danger">Record</button>
+					<button id="resetButton" type="button" class="btn btn-warning">Reset</button>
+
+					<div id="imageLinkDiv">
+					</div>
+				</div>
+			</div>
 		</div>
-	</body>
+	</div>
+</div>
+</body>
 </html>
