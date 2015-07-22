@@ -42,6 +42,8 @@ void setup()
   
   background(0);
 
+  xMouse = 30;
+  yMouse = 30;
   updateMouse = true;
 }
 
@@ -84,12 +86,6 @@ void draw()
   if(colorStep)
     colorNumber++;
 
-  if(updateMouse)
-  {
-    xMouse = mouseX;
-    yMouse = mouseY;
-  }
-
   if(drawShape)
   {
     if(square)
@@ -119,6 +115,14 @@ void draw()
   copy.endDraw();
   
   image(foregroundImage, 0, 0, width, height);
+}
+
+void mouseMoved() {
+  if(updateMouse)
+  {
+    xMouse = mouseX;
+    yMouse = mouseY;
+  }
 }
 
 void keyPressed()
