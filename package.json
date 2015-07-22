@@ -4,13 +4,15 @@
   "description": "Feedback simulator",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
     "body-parser": "^1.12.2",
     "bootstrap": "^3.3.4",
     "express": "~4.9.x",
-    "gif.js": "^0.1.6"
+    "gif.js": "^0.1.6",
+    "mocha": "^2.2.5"
   },
   "engines": {
     "node": "0.10.x"
