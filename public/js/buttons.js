@@ -21,21 +21,11 @@ function getProcessingInstance() {
 function addListeners() {
     var canvas = document.getElementById("feedback");
 
-    document.addEventListener('keydown', function(event) {
-        event.preventDefault();
-        var newEvent = document.createEvent('KeyboardEvent');
-        (newEvent.initKeyEvent || newEvent.initKeyboardEvent)('keydown', true, true, window,
-            0, 0, 0, 0,
-            0, event.keyCode);
-        canvas.dispatchEvent(newEvent);
+    window.addEventListener('keydown', function(event) {
+        processingInstance.keyPressed(event.keyCode);
     }, true);
-    document.addEventListener('keyup', function(event) {
-        event.preventDefault();
-        var newEvent = document.createEvent('KeyboardEvent');
-        (newEvent.initKeyEvent || newEvent.initKeyboardEvent)('keyup', true, true, window,
-            0, 0, 0, 0,
-            0, event.keyCode);
-        canvas.dispatchEvent(newEvent);
+    window.addEventListener('keyup', function(event) {
+        processingInstance.keyReleased(event.keyCode);
     }, true);
 }
 

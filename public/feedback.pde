@@ -125,45 +125,30 @@ void mouseMoved() {
   }
 }
 
-void keyPressed()
+void keyPressed(keyCode)
 {
-  if(keyCode == UP)
+  if(keyCode == 'W' || keyCode == 'w')
     upPressed();
-  else if(keyCode == DOWN)
+  else if(keyCode == 'S' || keyCode == 's')
     downPressed();
-    
-  if(key == '0')
-    resetScale();
-    
-  if(key == '9')
-    resetAngle();
-    
-  if(key == 'i')
-    invert();
   
-  if(keyCode == LEFT)
+  if(keyCode == 'A' || keyCode == 'a')
     leftPressed();
-  if(keyCode == RIGHT)
+  if(keyCode == 'D' || keyCode == 'd')
     rightPressed();
-    
-  if(key == 'r')
-    resetPressed();
 }
 
-void keyReleased()
+void keyReleased(keyCode)
 {
-  if(keyCode == UP)
+  if(keyCode == 'W' || keyCode == 'w')
     upReleased();
-  else if(keyCode == DOWN)
+  else if(keyCode == 'S' || keyCode == 's')
     downReleased();
   
-  if(keyCode == LEFT)
+  if(keyCode == 'A' || keyCode == 'a')
     leftReleased();
-  if(keyCode == RIGHT)
+  if(keyCode == 'D' || keyCode == 'd')
     rightReleased();
-    
-  if(key == 'r')
-    resetReleased();
 }
 
 void mouseClicked() {
