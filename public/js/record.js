@@ -14,44 +14,36 @@ $(document).ready(function() {
 
     recordButton.click(function() {
         if (!recording) {
-            gif = new GIF({
-                quality: 45,
-                workers: 4,
-                width: canvas.width,
-                height: canvas.height,
-                workerScript: 'js/gif.worker.js'
-            });
             recording = true;
             recordButton.text("Stop");
             timer = setInterval(function() {
-                gif.addFrame(context, {
-                    delay: frameDelay,
-                    copy: true
-                });
+                frames.push(context.getImageData(0, 0, canvas.width, canvas.height));
             }, frameDelay);
         } else {
             recordButton.text("Processing...");
             clearInterval(timer);
             progressDiv.fadeIn();
-            gif.on('progress', function(progress) {
-                progressbar.css('width', progress * 100 + '%').attr('aria-valuenow', progress * 100);
-                progressbar.html(Math.ceil(progress * 100) + '%');
-            });
-            gif.on('finished', function(blob) {
-                recordButton.text('Record');
-                recording = false;
-                progressDiv.fadeOut();
-                progressbar.css('width', '0%').attr('aria-valuenow', 0);
-                var urlCreator = window.URL || window.webkitURL;
-                var imageUrl = urlCreator.createObjectURL(blob);
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function() {
+            var host = location.origin.replace(/^http/, 'ws');
+            var client = new BinaryClient(host);
+            client.on('open', function(stream) {
+                var stream = client.createStream();
+
+                frames.forEach(function(frame) {
+                    stream.write(JSON.stringify({frame: frame}));
+                });
+                stream.write(null);
+
+                stream.on('end', function() {
+                    recordButton.text('Record');
+                    recording = false;
+                    progressDiv.fadeOut();
+                    progressbar.css('width', '0%').attr('aria-valuenow', 0);
+                    
                     var displayImg = $('<img class="img-thumbnail">');
                     displayImg.css('max-width', '100%');
                     displayImg.css('max-height', '100%');
                     displayImg.css('margin', '10px 00px 10px 00px');
-                    displayImg.attr('src', reader.result);
+                    // displayImg.attr('src', reader.result);
 
                     var link = $('<a target="_blank">');
                     link.attr('href', imageUrl);
@@ -64,9 +56,55 @@ $(document).ready(function() {
                         h3.appendTo('#imageLinkDiv');
                     }
                     link.appendTo('#imageLinkDiv');
-                };
+                });
+
+                stream.on('error', function(err) {
+                    alert("Problem saving gif!");
+                    recording = false;
+                    recordButton.text("Record");
+                });
             });
-            gif.render();
+
+            client.on('error', function(err) {
+                alert("Problem saving video!");
+                recording = false;
+                recordButton.text("Record");
+            });
+
+            // gif.on('progress', function(progress) {
+            //     progressbar.css('width', progress * 100 + '%').attr('aria-valuenow', progress * 100);
+            //     progressbar.html(Math.ceil(progress * 100) + '%');
+            // });
+            // gif.on('finished', function(blob) {
+            //     recordButton.text('Record');
+            //     recording = false;
+            //     progressDiv.fadeOut();
+            //     progressbar.css('width', '0%').attr('aria-valuenow', 0);
+            //     var urlCreator = window.URL || window.webkitURL;
+            //     var imageUrl = urlCreator.createObjectURL(blob);
+            //     var reader = new FileReader();
+            //     reader.readAsDataURL(blob);
+            //     reader.onloadend = function() {
+            //         var displayImg = $('<img class="img-thumbnail">');
+            //         displayImg.css('max-width', '100%');
+            //         displayImg.css('max-height', '100%');
+            //         displayImg.css('margin', '10px 00px 10px 00px');
+            //         displayImg.attr('src', reader.result);
+
+            //         var link = $('<a target="_blank">');
+            //         link.attr('href', imageUrl);
+            //         displayImg.appendTo(link);
+
+            //         var imageLinkDiv = $('#imageLinkDiv');
+            //         if (!$.trim(imageLinkDiv.html()).length) {
+            //             var h3 = $('<h3>');
+            //             h3.html('Recordings');
+            //             h3.appendTo('#imageLinkDiv');
+            //         }
+            //         link.appendTo('#imageLinkDiv');
+            //     };
+            // });
+            // gif.render();
         }
     });
 });

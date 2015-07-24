@@ -8,11 +8,12 @@
     "test": "./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
+    "binaryjs": "^0.2.1",
     "body-parser": "^1.12.2",
-    "bootstrap": "^3.3.4",
     "express": "~4.9.x",
-    "gif.js": "^0.1.6",
-    "mocha": "^2.2.5"
+    "gifencoder": "git+https://git@github.com/emptyflash/gifencoder.git",
+    "mocha": "^2.2.5",
+    "node-uuid": "^1.4.3"
   },
   "engines": {
     "node": "0.10.x"
