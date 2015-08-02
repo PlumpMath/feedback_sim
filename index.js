@@ -25,32 +25,25 @@ var getSessionId = function() {
 };
 
 binaryserver.on('connection', function(client) {
-    client.on('stream', function(stream, meta) {
+    client.on('stream', function(stream) {
         var sessionId = getSessionId();
-        
+
         var encoder = new GIFEncoder(600, 600);
-        encoder.createReadStream().pipe(fs.createWriteStream(sessionId + '.gif'));
+        // encoder.createReadStream().pipe(fs.createWriteStream(sessionId + '.gif'));
 
-        encoder.start();
-        encoder.setRepeat(0);
-        encoder.setFrameRate(30);
-        encoder.setQuality(30);
+        stream.pipe(encoder.createWriteStream({
+            repeat: 0,
+            frameRate: 30,
+            quality: 30
+        })).pipe(fs.createWriteStream(sessionId + '.gif'));
 
-        var jsonData = ""
-        stream.on('data', function(chunk) {
-            if (chunk != null) {
-                jsonData += chunk;
-            } else {
-                var frameSequence = JSON.parse(jsonData).sequence;
-                frameSequence.forEach(function(data, index) {
-                    var imageData = data.replace(/^data:image\/png;base64,/,"");
-                    encoder.addFrame(new Buffer(imageData, 'base64'));
-                });
+        // stream.on('data', function(chunk) {
+        //     console.log(chunk);
+        // });
 
-                encoder.finish();
-
-                stream.end();
-            }
+        stream.on('end', function() {
+            var stream = client.createStream({sessionId: sessionId});
+            stream.end();
         });
     });
 
@@ -62,24 +55,12 @@ binaryserver.on('connection', function(client) {
 app.get('/get-video/:session_id/', function(request, response) {
     var session_id = request.params.session_id.split('.')[0];
 
-    response.writeHead(200, "video/msvideo");
+    response.writeHead(200, 'video/msvideo');
 
     var fileStream = fs.createReadStream('video-' + session_id + '.avi');
     fileStream.pipe(response);
 });
 
-setInterval(function() {
-    console.log("start");
-    fs.readdir(".", function(error, list) {
-        list.forEach(function(file) {
-            var extension = file.split('.')[1];
-            if (extension == "avi" || extension == "png") {
-                fs.unlinkSync(file);
-            }
-        });
-    });
-}, 3600000);
-
 app.listen(app.get('port'), function() {
-    console.log("Feedback Simulator is running at localhost:" + port);
+    console.log('Feedback Simulator is running at localhost:' + port);
 });
