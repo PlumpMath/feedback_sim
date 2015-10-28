@@ -17,8 +17,8 @@ $(document).ready(function() {
             gif = new GIF({
                 quality: 45,
                 workers: 4,
-                width: canvas.width / 2,
-                height: canvas.height / 2,
+                width: canvas.width,
+                height: canvas.height,
                 workerScript: 'js/gif.worker.js'
             });
             recording = true;
